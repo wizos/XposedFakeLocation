@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "com.noobexon.xposedfakelocation"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.noobexon.xposedfakelocation"
+        applicationId = "me.wizos.fakelocation"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
-        versionName = "0.0.3"
+        versionName = "0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

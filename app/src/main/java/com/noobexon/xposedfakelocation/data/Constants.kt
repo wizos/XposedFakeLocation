@@ -2,7 +2,7 @@
 package com.noobexon.xposedfakelocation.data
 
 // APP
-const val MANAGER_APP_PACKAGE_NAME = "com.noobexon.xposedfakelocation"
+const val MANAGER_APP_PACKAGE_NAME = "me.wizos.fakelocation"
 const val SHARED_PREFS_FILE = "xposed_shared_prefs"
 
 // KEYS
