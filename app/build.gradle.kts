@@ -1,8 +1,14 @@
+import java.util.Properties
+import kotlin.apply
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
+
+val localProperties = Properties().apply { load(rootProject.file("local.properties").inputStream()) }
+val signProperties = Properties().apply { load(File(localProperties.getProperty("sign.props.path")).inputStream()) }
 
 android {
     namespace = "com.noobexon.xposedfakelocation"
@@ -18,13 +24,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(signProperties["storeFile"] as String)
+            storePassword = signProperties["storePassword"] as String
+            keyAlias = signProperties["keyAlias"] as String
+            keyPassword = signProperties["keyPassword"] as String
+        }
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+    applicationVariants.all {
+        outputs.all {
+            val outputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            outputImpl.outputFileName =
+                "fakelocation-${buildType.name}-v${versionName}(${versionCode}).apk"
         }
     }
     compileOptions {
@@ -39,9 +61,14 @@ android {
         buildConfig = true
     }
 }
+tasks.register<Copy>("exportReleaseApk") {
+    dependsOn("assembleRelease")
+    from("${layout.buildDirectory}/outputs/apk/release")
+    include("*.apk")
+    into("${rootDir}/dist")
+}
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
