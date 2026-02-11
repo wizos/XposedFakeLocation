@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,12 +22,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.compose.ui.platform.LocalContext
 import com.noobexon.xposedfakelocation.BuildConfig
+import com.noobexon.xposedfakelocation.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +55,7 @@ fun AboutScreen(
 @Composable
 fun AboutTopAppBar(navController: NavController) {
     TopAppBar(
-        title = { Text("About") },
+        title = { Text(stringResource(R.string.about)) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -62,7 +64,7 @@ fun AboutTopAppBar(navController: NavController) {
         ),
         navigationIcon = {
             IconButton(onClick = { navController.navigateUp() }) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
         }
     )
@@ -87,7 +89,7 @@ fun AboutContent() {
 @Composable
 fun AppTitle() {
     Text(
-        text = "XposedFakeLocation",
+        text = stringResource(R.string.app_name),
         style = MaterialTheme.typography.headlineSmall.copy(
             fontWeight = FontWeight.Bold
         ),
@@ -120,7 +122,7 @@ fun AppVersionSection() {
 @Composable
 fun AppVersionTitle() {
     Text(
-        text = "Version:",
+        text = stringResource(R.string.version, BuildConfig.VERSION_NAME),
         style = MaterialTheme.typography.bodyMedium.copy(
             fontWeight = FontWeight.SemiBold
         ),
@@ -151,7 +153,7 @@ fun AppDeveloperSection() {
 @Composable
 fun AppDeveloperTitle() {
     Text(
-        text = "Developed and maintained by:",
+        text = stringResource(R.string.developed_and_maintained_by),
         style = MaterialTheme.typography.bodyMedium.copy(
             fontWeight = FontWeight.SemiBold
         ),

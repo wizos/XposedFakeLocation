@@ -1,7 +1,6 @@
 //SettingsScreen.kt
 package com.noobexon.xposedfakelocation.manager.ui.settings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -11,11 +10,17 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
@@ -23,9 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import com.noobexon.xposedfakelocation.R
 
 // Dimension constants
 private object Dimensions {
@@ -41,123 +48,134 @@ private object Dimensions {
 // Setting definitions to reduce duplication
 private object SettingDefinitions {
     // Define setting categories
-    val CATEGORIES = mapOf(
-        "Location" to listOf("Randomize Nearby Location", "Custom Horizontal Accuracy", "Custom Vertical Accuracy"),
-        "Altitude" to listOf("Custom Altitude", "Custom MSL", "Custom MSL Accuracy"),
-        "Movement" to listOf("Custom Speed", "Custom Speed Accuracy")
+    fun getCategories(context: android.content.Context) = mapOf(
+        context.getString(R.string.location) to listOf(
+            context.getString(R.string.randomize_nearby_location),
+            context.getString(R.string.custom_horizontal_accuracy),
+            context.getString(R.string.custom_vertical_accuracy)
+        ),
+        context.getString(R.string.altitude) to listOf(
+            context.getString(R.string.custom_altitude),
+            context.getString(R.string.custom_msl),
+            context.getString(R.string.custom_msl_accuracy)
+        ),
+        context.getString(R.string.movement) to listOf(
+            context.getString(R.string.custom_speed),
+            context.getString(R.string.custom_speed_accuracy)
+        )
     )
-    
+
     // Define all settings with their parameters
     @Composable
     fun getSettings(viewModel: SettingsViewModel): List<SettingData> = listOf(
         // Randomize Nearby Location
         DoubleSettingData(
-            title = "Randomize Nearby Location",
-            description = "Randomly places your location within the specified radius",
+            title = stringResource(R.string.randomize_nearby_location),
+            description = stringResource(R.string.randomize_nearby_location_description),
             useValueState = viewModel.useRandomize.collectAsState(),
             valueState = viewModel.randomizeRadius.collectAsState(),
             setUseValue = viewModel::setUseRandomize,
             setValue = viewModel::setRandomizeRadius,
-            label = "Randomization Radius",
-            unit = "m",
+            label = stringResource(R.string.randomization_radius),
+            unit = stringResource(R.string.meters),
             minValue = 0f,
             maxValue = 2000f,
             step = 0.1f
         ),
         // Custom Horizontal Accuracy
         DoubleSettingData(
-            title = "Custom Horizontal Accuracy",
-            description = "Sets the horizontal accuracy of your location",
+            title = stringResource(R.string.custom_horizontal_accuracy),
+            description = stringResource(R.string.custom_horizontal_accuracy_description),
             useValueState = viewModel.useAccuracy.collectAsState(),
             valueState = viewModel.accuracy.collectAsState(),
             setUseValue = viewModel::setUseAccuracy,
             setValue = viewModel::setAccuracy,
-            label = "Horizontal Accuracy",
-            unit = "m",
+            label = stringResource(R.string.horizontal_accuracy),
+            unit = stringResource(R.string.meters),
             minValue = 0f,
             maxValue = 100f,
             step = 1f
         ),
         // Custom Vertical Accuracy
         FloatSettingData(
-            title = "Custom Vertical Accuracy",
-            description = "Sets the vertical accuracy of your location",
+            title = stringResource(R.string.custom_vertical_accuracy),
+            description = stringResource(R.string.custom_vertical_accuracy_description),
             useValueState = viewModel.useVerticalAccuracy.collectAsState(),
             valueState = viewModel.verticalAccuracy.collectAsState(),
             setUseValue = viewModel::setUseVerticalAccuracy,
             setValue = viewModel::setVerticalAccuracy,
-            label = "Vertical Accuracy",
-            unit = "m",
+            label = stringResource(R.string.vertical_accuracy),
+            unit = stringResource(R.string.meters),
             minValue = 0f,
             maxValue = 100f,
             step = 1f
         ),
         // Custom Altitude
         DoubleSettingData(
-            title = "Custom Altitude",
-            description = "Sets a custom altitude for your location",
+            title = stringResource(R.string.custom_altitude),
+            description = stringResource(R.string.custom_altitude_description),
             useValueState = viewModel.useAltitude.collectAsState(),
             valueState = viewModel.altitude.collectAsState(),
             setUseValue = viewModel::setUseAltitude,
             setValue = viewModel::setAltitude,
-            label = "Altitude",
-            unit = "m",
+            label = stringResource(R.string.altitude),
+            unit = stringResource(R.string.meters),
             minValue = 0f,
             maxValue = 2000f,
             step = 0.5f
         ),
         // Custom MSL
         DoubleSettingData(
-            title = "Custom MSL",
-            description = "Sets a custom mean sea level value",
+            title = stringResource(R.string.custom_msl),
+            description = stringResource(R.string.custom_msl_description),
             useValueState = viewModel.useMeanSeaLevel.collectAsState(),
             valueState = viewModel.meanSeaLevel.collectAsState(),
             setUseValue = viewModel::setUseMeanSeaLevel,
             setValue = viewModel::setMeanSeaLevel,
-            label = "MSL",
-            unit = "m",
+            label = stringResource(R.string.msl),
+            unit = stringResource(R.string.meters),
             minValue = -400f,
             maxValue = 2000f,
             step = 0.5f
         ),
         // Custom MSL Accuracy
         FloatSettingData(
-            title = "Custom MSL Accuracy",
-            description = "Sets the accuracy of the mean sea level value",
+            title = stringResource(R.string.custom_msl_accuracy),
+            description = stringResource(R.string.custom_msl_accuracy_description),
             useValueState = viewModel.useMeanSeaLevelAccuracy.collectAsState(),
             valueState = viewModel.meanSeaLevelAccuracy.collectAsState(),
             setUseValue = viewModel::setUseMeanSeaLevelAccuracy,
             setValue = viewModel::setMeanSeaLevelAccuracy,
-            label = "MSL Accuracy",
-            unit = "m",
+            label = stringResource(R.string.msl_accuracy),
+            unit = stringResource(R.string.meters),
             minValue = 0f,
             maxValue = 100f,
             step = 1f
         ),
         // Custom Speed
         FloatSettingData(
-            title = "Custom Speed",
-            description = "Sets a custom speed for your location",
+            title = stringResource(R.string.custom_speed),
+            description = stringResource(R.string.custom_speed_description),
             useValueState = viewModel.useSpeed.collectAsState(),
             valueState = viewModel.speed.collectAsState(),
             setUseValue = viewModel::setUseSpeed,
             setValue = viewModel::setSpeed,
-            label = "Speed",
-            unit = "m/s",
+            label = stringResource(R.string.speed),
+            unit = stringResource(R.string.meters_per_second),
             minValue = 0f,
             maxValue = 30f,
             step = 0.1f
         ),
         // Custom Speed Accuracy
         FloatSettingData(
-            title = "Custom Speed Accuracy",
-            description = "Sets the accuracy of your speed value",
+            title = stringResource(R.string.custom_speed_accuracy),
+            description = stringResource(R.string.custom_speed_accuracy_description),
             useValueState = viewModel.useSpeedAccuracy.collectAsState(),
             valueState = viewModel.speedAccuracy.collectAsState(),
             setUseValue = viewModel::setUseSpeedAccuracy,
             setValue = viewModel::setSpeedAccuracy,
-            label = "Speed Accuracy",
-            unit = "m/s",
+            label = stringResource(R.string.speed_accuracy),
+            unit = stringResource(R.string.meters_per_second),
             minValue = 0f,
             maxValue = 100f,
             step = 1f
@@ -171,6 +189,7 @@ fun SettingsScreen(
     navController: NavController,
     settingsViewModel: SettingsViewModel = viewModel ()
 ) {
+    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
 
@@ -180,7 +199,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings") },
+                title = { Text(stringResource(R.string.settings)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -190,8 +209,8 @@ fun SettingsScreen(
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack, 
-                            contentDescription = "Navigate back"
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.navigate_back)
                         )
                     }
                 }
@@ -214,11 +233,11 @@ fun SettingsScreen(
                     .verticalScroll(scrollState)
             ) {
                 Spacer(modifier = Modifier.height(Dimensions.SPACING_MEDIUM))
-                
+
                 // Display settings by category
-                SettingDefinitions.CATEGORIES.forEach { (category, settingsInCategory) ->
+                SettingDefinitions.getCategories(context).forEach { (category, settingsInCategory) ->
                     CategoryHeader(category)
-                    
+
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -248,10 +267,10 @@ fun SettingsScreen(
                             }
                         }
                     }
-                    
+
                     Spacer(modifier = Modifier.height(Dimensions.SPACING_MEDIUM))
                 }
-                
+
                 // Add space at the bottom of the list
                 Spacer(modifier = Modifier.height(Dimensions.SPACING_LARGE))
             }
@@ -364,7 +383,7 @@ private fun <T : Number> SettingItem(
     parseValue: (Float) -> T
 ) {
     var showTooltip by remember { mutableStateOf(false) }
-    
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(Dimensions.SPACING_SMALL)
@@ -382,20 +401,20 @@ private fun <T : Number> SettingItem(
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium
                     )
-                    
+
                     IconButton(
                         onClick = { showTooltip = !showTooltip },
                         modifier = Modifier.size(24.dp)
                     ) {
                         Icon(
                             Icons.Default.Info,
-                            contentDescription = "More information about $title",
+                            contentDescription = stringResource(R.string.more_info_about, title),
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
                 }
-                
+
                 if (showTooltip) {
                     Text(
                         text = description,
@@ -405,7 +424,7 @@ private fun <T : Number> SettingItem(
                     )
                 }
             }
-            
+
             Switch(
                 checked = useValue,
                 onCheckedChange = onUseValueChange,
@@ -415,24 +434,24 @@ private fun <T : Number> SettingItem(
                     uncheckedThumbColor = MaterialTheme.colorScheme.outline,
                     uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
                 ),
-                modifier = Modifier.semantics { 
-                    contentDescription = if (useValue) "Disable $title" else "Enable $title" 
+                modifier = Modifier.semantics {
+                    contentDescription = if (useValue) "Disable $title" else "Enable $title"
                 }
             )
         }
 
         if (useValue) {
             Spacer(modifier = Modifier.height(Dimensions.SPACING_MEDIUM))
-            
+
             var sliderValue by remember { mutableFloatStateOf(value.toFloat()) }
             var showExactValue by remember { mutableStateOf(false) }
-            
+
             LaunchedEffect(value) {
                 if (sliderValue != value.toFloat()) {
                     sliderValue = value.toFloat()
                 }
             }
-            
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Dimensions.SPACING_SMALL),
@@ -446,10 +465,10 @@ private fun <T : Number> SettingItem(
                         .weight(1f)
                         .clickable { showExactValue = !showExactValue }
                 )
-                
+
                 // Add +/- buttons for precise adjustment
                 OutlinedIconButton(
-                    onClick = { 
+                    onClick = {
                         val newValue = (sliderValue - step).coerceAtLeast(minValue)
                         sliderValue = newValue
                         onValueChange(parseValue(newValue))
@@ -464,9 +483,9 @@ private fun <T : Number> SettingItem(
                         style = MaterialTheme.typography.titleSmall
                     )
                 }
-                
+
                 OutlinedIconButton(
-                    onClick = { 
+                    onClick = {
                         val newValue = (sliderValue + step).coerceAtMost(maxValue)
                         sliderValue = newValue
                         onValueChange(parseValue(newValue))
@@ -482,7 +501,7 @@ private fun <T : Number> SettingItem(
                     )
                 }
             }
-            
+
             // Min and max value labels
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,

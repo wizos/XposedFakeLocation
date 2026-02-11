@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,12 +18,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.noobexon.xposedfakelocation.BuildConfig
 import compose.icons.LineAwesomeIcons
 import compose.icons.lineawesomeicons.*
+import com.noobexon.xposedfakelocation.R
 import com.noobexon.xposedfakelocation.manager.ui.navigation.Screen
 
 // Constants for drawer dimensions and styling
@@ -62,11 +64,11 @@ fun DrawerContent(
             Spacer(modifier = Modifier.height(DrawerDimensions.SECTION_SPACING))
             
             // Navigation Section
-            DrawerSectionHeader("Navigation")
+            DrawerSectionHeader(stringResource(R.string.navigation))
             
             DrawerItem(
                 icon = LineAwesomeIcons.MapSolid,
-                label = "Map",
+                label = stringResource(R.string.map),
                 onClick = {
                     navController.navigate(Screen.Map.route)
                     onCloseDrawer()
@@ -76,7 +78,7 @@ fun DrawerContent(
             
             DrawerItem(
                 icon = LineAwesomeIcons.HeartSolid,
-                label = "Favorites",
+                label = stringResource(R.string.favorites),
                 onClick = {
                     navController.navigate(Screen.Favorites.route)
                     onCloseDrawer()
@@ -86,7 +88,7 @@ fun DrawerContent(
             
             DrawerItem(
                 icon = Icons.Default.Settings,
-                label = "Settings",
+                label = stringResource(R.string.settings),
                 onClick = {
                     navController.navigate(Screen.Settings.route)
                     onCloseDrawer()
@@ -97,12 +99,12 @@ fun DrawerContent(
             Spacer(modifier = Modifier.height(DrawerDimensions.SECTION_SPACING))
             
             // Community Section
-            DrawerSectionHeader("Community")
+            DrawerSectionHeader(stringResource(R.string.community))
             
             DrawerItem(
                 icon = LineAwesomeIcons.Telegram,
-                label = "Telegram",
-                onClick = { Toast.makeText(context, "Coming soon!", Toast.LENGTH_SHORT).show() },
+                label = stringResource(R.string.telegram),
+                onClick = { Toast.makeText(context, context.getString(R.string.coming_soon), Toast.LENGTH_SHORT).show() },
                 trailingIcon = {
                     Box(
                         modifier = Modifier
@@ -115,7 +117,7 @@ fun DrawerContent(
             
             DrawerItem(
                 icon = LineAwesomeIcons.Discord,
-                label = "Discord",
+                label = stringResource(R.string.discord),
                 onClick = {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://discord.gg/8eCRU3KzVS"))
                     context.startActivity(intent)
@@ -125,7 +127,7 @@ fun DrawerContent(
             
             DrawerItem(
                 icon = LineAwesomeIcons.Github,
-                label = "GitHub",
+                label = stringResource(R.string.gitHub),
                 onClick = {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/noobexon1/XposedFakeLocation"))
                     context.startActivity(intent)
@@ -136,11 +138,11 @@ fun DrawerContent(
             Spacer(modifier = Modifier.height(DrawerDimensions.SECTION_SPACING))
             
             // About Section
-            DrawerSectionHeader("App Info")
+            DrawerSectionHeader(stringResource(R.string.app_info))
             
             DrawerItem(
                 icon = LineAwesomeIcons.InfoCircleSolid,
-                label = "About",
+                label = stringResource(R.string.about),
                 onClick = {
                     navController.navigate(Screen.About.route)
                     onCloseDrawer()
@@ -152,7 +154,7 @@ fun DrawerContent(
             Spacer(modifier = Modifier.weight(1f))
             
             Text(
-                text = "Version 1.0",
+                text = stringResource(R.string.version, BuildConfig.VERSION_NAME),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                 modifier = Modifier
@@ -171,14 +173,14 @@ fun DrawerHeader() {
             .padding(DrawerDimensions.HEADER_PADDING)
     ) {
         Text(
-            text = "XposedFakeLocation",
+            text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
         )
         
         Text(
-            text = "Spoof your location easily",
+            text = stringResource(R.string.spoof_your_location_easily),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

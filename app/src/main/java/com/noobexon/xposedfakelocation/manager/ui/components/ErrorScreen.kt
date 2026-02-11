@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.noobexon.xposedfakelocation.R
 
 /**
  * Displays an error dialog when the Xposed module is not active.
@@ -18,19 +20,19 @@ fun ErrorScreen(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Module Not Active") },
+        title = { Text(stringResource(R.string.error_module_not_active)) },
         text = {
-            Text("XposedFakeLocation module is not active in your Xposed manager app. Please enable it and restart the app to continue.")
+            Text(stringResource(R.string.error_module_not_active_message))
         },
         confirmButton = {
             Button(onClick = onConfirm) {
-                Text("OK")
+                Text(stringResource(android.R.string.ok))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(android.R.string.cancel))
             }
         }
     )
-} 
+}

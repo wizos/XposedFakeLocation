@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -18,6 +19,7 @@ import com.noobexon.xposedfakelocation.manager.ui.map.components.AddToFavoritesD
 import com.noobexon.xposedfakelocation.manager.ui.map.components.GoToPointDialog
 import com.noobexon.xposedfakelocation.manager.ui.map.components.MapViewContainer
 import com.noobexon.xposedfakelocation.manager.ui.navigation.Screen
+import com.noobexon.xposedfakelocation.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,12 +30,12 @@ fun MapScreen(
 ) {
     val context = LocalContext.current
     val uiState by mapViewModel.uiState.collectAsStateWithLifecycle()
-    
+
     // Extract values from UI state
     val isPlaying = uiState.isPlaying
     val isFabClickable = uiState.isFabClickable
     val isLoading = uiState.loadingState == LoadingState.Loading
-    
+
     // Dialog states
     val showGoToPointDialog = uiState.goToPointDialogState == DialogState.Visible
     val showAddToFavoritesDialog = uiState.addToFavoritesDialogState == DialogState.Visible
@@ -67,7 +69,7 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 TopAppBar(
-                    title = { Text("XposedFakeLocation") },
+                    title = { Text(stringResource(R.string.app_name)) },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         titleContentColor = MaterialTheme.colorScheme.onPrimary,
@@ -78,7 +80,7 @@ fun MapScreen(
                         IconButton(
                             onClick = { scope.launch { drawerState.open() } }
                         ) {
-                            Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                            Icon(imageVector = Icons.Default.Menu, contentDescription = stringResource(R.string.menu))
                         }
                     },
                     actions = {
@@ -87,38 +89,38 @@ fun MapScreen(
                                 mapViewModel.triggerCenterMapEvent()
                             }
                         ) {
-                            Icon(imageVector = Icons.Default.MyLocation, contentDescription = "Center")
+                            Icon(imageVector = Icons.Default.MyLocation, contentDescription = stringResource(R.string.center))
                         }
                         IconButton(
                             onClick = {
                                 showOptionsMenu = true
                             }
                         ) {
-                            Icon(imageVector = Icons.Default.MoreVert, contentDescription = "Options")
+                            Icon(imageVector = Icons.Default.MoreVert, contentDescription = stringResource(R.string.options))
                         }
                         DropdownMenu(
                             expanded = showOptionsMenu,
                             onDismissRequest = { showOptionsMenu = false }
                         ) {
                             DropdownMenuItem(
-                                leadingIcon = { Icon(imageVector = Icons.Default.LocationSearching, contentDescription = "Go to Point") },
-                                text = { Text("Go to Point") },
+                                leadingIcon = { Icon(imageVector = Icons.Default.LocationSearching, contentDescription = stringResource(R.string.go_to_point)) },
+                                text = { Text(stringResource(R.string.go_to_point)) },
                                 onClick = {
                                     showOptionsMenu = false
                                     mapViewModel.showGoToPointDialog()
                                 }
                             )
                             DropdownMenuItem(
-                                leadingIcon = { Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "Add to Favorites") },
-                                text = { Text("Add to Favorites") },
+                                leadingIcon = { Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = stringResource(R.string.add_to_favorites)) },
+                                text = { Text(stringResource(R.string.add_to_favorites)) },
                                 onClick = {
                                     showOptionsMenu = false
                                     mapViewModel.showAddToFavoritesDialog()
                                 }
                             )
                             DropdownMenuItem(
-                                leadingIcon = { Icon(imageVector = Icons.Default.Star, contentDescription = "Favorites") },
-                                text = { Text("Favorites") },
+                                leadingIcon = { Icon(imageVector = Icons.Default.Star, contentDescription = stringResource(R.string.favorites)) },
+                                text = { Text(stringResource(R.string.favorites)) },
                                 onClick = {
                                     showOptionsMenu = false
                                     navController.navigate(Screen.Favorites.route)
@@ -126,8 +128,8 @@ fun MapScreen(
                             )
                             // add clear location feature
                             DropdownMenuItem(
-                                leadingIcon = { Icon(imageVector = Icons.Default.Clear, contentDescription = "Clear Location") },
-                                text = { Text("Clear Location") },
+                                leadingIcon = { Icon(imageVector = Icons.Default.Clear, contentDescription = stringResource(R.string.clear_location)) },
+                                text = { Text(stringResource(R.string.clear_location)) },
                                 onClick = {
                                     showOptionsMenu = false
                                     mapViewModel.updateClickedLocation(null)
@@ -139,15 +141,17 @@ fun MapScreen(
                 )
             },
             floatingActionButton = {
+                val fakeLocationSet = stringResource(R.string.fake_location_set)
+                val unsetFakeLocation = stringResource(R.string.unset_fake_location)
                 FloatingActionButton(
                     onClick = {
                         if (isFabClickable) {
                             val wasPlaying = uiState.isPlaying
                             mapViewModel.togglePlaying()
                             if (!wasPlaying) {
-                                Toast.makeText(context, "Fake Location Set", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, fakeLocationSet, Toast.LENGTH_SHORT).show()
                             } else {
-                                Toast.makeText(context, "Unset Fake Location", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, unsetFakeLocation, Toast.LENGTH_SHORT).show()
                             }
                         }
                     },
@@ -171,7 +175,7 @@ fun MapScreen(
                 ) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Default.Stop else Icons.Default.PlayArrow,
-                        contentDescription = if (isPlaying) "Stop" else "Play"
+                        contentDescription = if (isPlaying) stringResource(R.string.stop) else stringResource(R.string.play)
                     )
                 }
             }

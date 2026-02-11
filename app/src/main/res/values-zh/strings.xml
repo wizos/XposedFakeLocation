@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">虚拟定位</string>
+    <string name="fake_location_is_active">虚拟定位已启用！</string>
+    <string name="developed_and_maintained_by">开发与维护：</string>
+    <string name="module_not_active">模块未激活</string>
+    <string name="navigation">导航</string>
+    <string name="favorites">收藏</string>
+    <string name="settings">设置</string>
+    <string name="spoof_your_location_easily">轻松伪装您的位置</string>
+
+    <!-- Error Screen -->
+    <string name="error_module_not_active">模块未激活</string>
+    <string name="error_module_not_active_message">XposedFakeLocation 模块在您的 Xposed 管理器应用中未激活。请启用它并重启应用以继续。</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+
+    <!-- Permissions Screen -->
+    <string name="error_activity_access">错误：无法访问活动。</string>
+    <string name="permissions_required">使用此应用需要权限</string>
+    <string name="grant_permissions">授予权限</string>
+    <string name="permissions_permanently_denied">您已永久拒绝位置权限。请从设置中启用它们并重启应用。</string>
+    <string name="open_settings">打开设置</string>
+
+    <!-- Map Screen -->
+    <string name="menu">菜单</string>
+    <string name="center">中心</string>
+    <string name="options">选项</string>
+    <string name="go_to_point">前往坐标</string>
+    <string name="add_to_favorites">添加到收藏</string>
+    <string name="clear_location">清除位置</string>
+    <string name="fake_location_set">虚假位置已设置</string>
+    <string name="unset_fake_location">已取消虚假位置</string>
+    <string name="stop">停止</string>
+    <string name="play">开始</string>
+    <string name="coming_soon">即将推出！</string>
+    <string name="user_location_not_available">用户位置不可用</string>
+
+    <!-- Go to Point Dialog -->
+    <string name="go_to_point_title">前往坐标</string>
+    <string name="latitude">纬度</string>
+    <string name="longitude">经度</string>
+    <string name="go">前往</string>
+    <string name="invalid_coordinates">无效坐标</string>
+
+    <!-- Add to Favorites Dialog -->
+    <string name="add_to_favorites_title">添加到收藏</string>
+    <string name="name">名称</string>
+    <string name="save">保存</string>
+    <string name="location_name_template">位置 %d</string>
+
+    <!-- Favorites Screen -->
+    <string name="no_favorites">暂无收藏。</string>
+    <string name="back">返回</string>
+    <string name="delete">删除</string>
+    <string name="delete_favorite_confirmation">删除此收藏？</string>
+    <string name="lat_lon_format">纬度: %.6f, 经度: %.6f</string>
+
+    <!-- Settings Screen -->
+    <string name="accuracy">精度</string>
+    <string name="altitude">海拔</string>
+    <string name="navigate_back">导航返回</string>
+    <string name="location">位置</string>
+    <string name="movement">移动</string>
+    <string name="randomize_nearby_location">随机附近位置</string>
+    <string name="randomize_nearby_location_description">在指定半径内随机放置您的位置</string>
+    <string name="randomization_radius">随机化半径</string>
+    <string name="custom_horizontal_accuracy">自定义水平精度</string>
+    <string name="custom_horizontal_accuracy_description">设置您的位置的水平精度</string>
+    <string name="horizontal_accuracy">水平精度</string>
+    <string name="custom_vertical_accuracy">自定义垂直精度</string>
+    <string name="custom_vertical_accuracy_description">设置您的位置的垂直精度</string>
+    <string name="vertical_accuracy">垂直精度</string>
+    <string name="custom_altitude">自定义海拔</string>
+    <string name="custom_altitude_description">为您的位置设置自定义海拔</string>
+    <string name="custom_msl">自定义平均海平面</string>
+    <string name="custom_msl_description">设置自定义平均海平面值</string>
+    <string name="msl">平均海平面</string>
+    <string name="custom_msl_accuracy">自定义MSL精度</string>
+    <string name="custom_msl_accuracy_description">设置平均海平面值的精度</string>
+    <string name="msl_accuracy">MSL精度</string>
+    <string name="custom_speed">自定义速度</string>
+    <string name="custom_speed_description">为您的位置设置自定义速度</string>
+    <string name="speed">速度</string>
+    <string name="custom_speed_accuracy">自定义速度精度</string>
+    <string name="custom_speed_accuracy_description">设置您的速度值的精度</string>
+    <string name="speed_accuracy">速度精度</string>
+    <string name="meters">米</string>
+    <string name="meters_per_second">米/秒</string>
+    <string name="more_info_about">更多信息关于 %s</string>
+
+    <!-- Drawer -->
+    <string name="map">地图</string>
+    <string name="community">社区</string>
+    <!--<string name="telegram">Telegram</string>-->
+    <!--<string name="discord">Discord</string>-->
+    <!--<string name="github">GitHub</string>-->
+    <string name="app_info">应用信息</string>
+    <string name="about">关于</string>
+    <string name="spoof_location_subtitle">轻松欺骗您的位置</string>
+    <string name="version">版本 %s</string>
+
+    <!-- About Screen -->
+    <string name="about_title">关于</string>
+    <string name="app_description">虚拟定位是一个 Xposed 模块，允许您欺骗设备位置。</string>
+    <string name="developer">开发者</string>
+    <string name="license">许可证</string>
+</resources>
