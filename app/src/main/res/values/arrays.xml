@@ -1,5 +1,16 @@
 <resources>
     <string-array name="xposedscope" >
         <item>com.noobexon.xposedfakelocation</item>
+        <item>com.dianping.v1</item>
+        <item>com.google.android.apps.maps</item>      <!-- Google 地图 -->
+        <item>com.tencent.mm</item>                    <!-- 微信 -->
+        <item>com.tencent.mobileqq</item>              <!-- QQ -->
+        <item>com.autonavi.minimap</item>              <!-- 高德地图 -->
+        <item>com.baidu.BaiduMap</item>
+        <item>com.alibaba.android.rimet</item>
+        <item>com.sankuai.meituan</item>
+        <item>com.taobao.idlefish</item>
+        <item>me.ele</item>
+        <!--<item>android</item>  &lt;!&ndash; 系统框架，会影响所有应用 &ndash;&gt;-->
     </string-array>
 </resources>
